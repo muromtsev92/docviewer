@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.time.LocalDate;
+
 public class PaymentRequest extends Document{
 
     private StringProperty contractor = new SimpleStringProperty();
@@ -16,6 +18,7 @@ public class PaymentRequest extends Document{
     public PaymentRequest() {
         super("Заявка на оплату");
     }
+
 
     public String getContractor() {
         return contractor.get();
@@ -83,5 +86,19 @@ public class PaymentRequest extends Document{
                 + sum.get() + "\nВалюта: " + currency.get() + "\nКурс валюты: " + currencyRate.get()
                 + "\nКомиссия: " + commission.get();
     }
+
+    public static PaymentRequest fromString(String[] stringsFromFile) {
+        PaymentRequest paymentRequest = new PaymentRequest();
+        paymentRequest.setNumber(stringsFromFile[1].substring(7));
+        paymentRequest.setDate(LocalDate.parse(stringsFromFile[2].substring(6)));
+        paymentRequest.setUser(stringsFromFile[3].substring(14));
+        paymentRequest.setContractor(stringsFromFile[4].substring(12));
+        paymentRequest.setSum(Double.parseDouble(stringsFromFile[5].substring(7)));
+        paymentRequest.setCurrency(stringsFromFile[6].substring(8));
+        paymentRequest.setCurrencyRate(Double.parseDouble(stringsFromFile[7].substring(12)));
+        paymentRequest.setCommission(Double.parseDouble(stringsFromFile[8].substring(10)));
+        return paymentRequest;
+    }
+
 
 }

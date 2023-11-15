@@ -199,7 +199,7 @@ public class Docviewer extends Application {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Текстовые файлы", "*.txt"));
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            try (FileReader reader = new FileReader(file)) {
+            try {
                 String contentWithHead = Files.readString(Path.of(file.getPath()));
                 String content = contentWithHead.substring(0);
                 String[] stringsFromContent = content.split("\n");
@@ -210,10 +210,12 @@ public class Docviewer extends Application {
                         table.getItems().add(payroll);
                         break;
                     case "Тип: Накладная":
-                        System.out.println("rdy");
+                        Invoice invoice = Invoice.fromString(stringsFromContent);
+                        table.getItems().add(invoice);
                         break;
                     case "Тип: Заявка на оплату":
-                        System.out.println("rdy");
+                        PaymentRequest paymentRequest = PaymentRequest.fromString(stringsFromContent);
+                        table.getItems().add(paymentRequest);
                         break;
                 }
             } catch (IOException e) {
@@ -271,5 +273,4 @@ public class Docviewer extends Application {
         buttonsBox.setPadding(new Insets(10));
         return buttonsBox;
     }
-
 }

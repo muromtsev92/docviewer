@@ -9,7 +9,6 @@ module ru.test.docviewer {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
-    requires lombok;
 
     opens ru.test.docviewer to javafx.fxml;
     exports ru.test.docviewer;

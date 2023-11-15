@@ -16,16 +16,6 @@ public class Payroll extends Document{
         super("Платежка");
     }
 
-    public static Payroll fromString(String[] stringsFromFile) {
-        Payroll payroll = new Payroll();
-        payroll.setNumber(stringsFromFile[1].substring(7));
-        payroll.setDate(LocalDate.parse(stringsFromFile[2].substring(6)));
-        payroll.setUser(stringsFromFile[3].substring(14));
-        payroll.setSum(Double.parseDouble(stringsFromFile[4].substring(7)));
-        payroll.setEmployee(stringsFromFile[5].substring(11));
-        return payroll;
-    }
-
     public double getSum() {
         return sum.get();
     }
@@ -53,5 +43,15 @@ public class Payroll extends Document{
     @Override
     public String toString() {
         return "Тип: Платежка\n" + super.toString() + "\nСумма: " + sum.get() + "\nСотрудник: " + employee.get();
+    }
+
+    public static Payroll fromString(String[] stringsFromFile) {
+        Payroll payroll = new Payroll();
+        payroll.setNumber(stringsFromFile[1].substring(7));
+        payroll.setDate(LocalDate.parse(stringsFromFile[2].substring(6)));
+        payroll.setUser(stringsFromFile[3].substring(14));
+        payroll.setSum(Double.parseDouble(stringsFromFile[4].substring(7)));
+        payroll.setEmployee(stringsFromFile[5].substring(11));
+        return payroll;
     }
 }
