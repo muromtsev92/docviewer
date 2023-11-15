@@ -1,13 +1,10 @@
 package ru.test.docviewer;
 
 import javafx.application.Application;
-import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,7 +17,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,13 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Docviewer extends Application {
-    private ObservableList<Document> documents = FXCollections.observableArrayList();
-    private TableView<Document> table = new TableView<>();
+    private final ObservableList<Document> documents = FXCollections.observableArrayList();
+    private final TableView<Document> table = new TableView<>();
     @Override
-    public void start(Stage stage) throws IOException {
-        HBox buttonBox = getButtonBox();
+    public void start(Stage stage){
+        HBox buttonBox = getButtonBox(); //создали панель кнопок
 
-        TableColumn<Document, Boolean> checkBoxColumn = new TableColumn<>("");
+        TableColumn<Document, Boolean> checkBoxColumn = new TableColumn<>("");  //заполняем и настраиваем tableView
         TableColumn<Document, String> nameColumn = new TableColumn<>("Наименование");
         TableColumn<Document, String> numberColumn = new TableColumn<>("Номер");
         TableColumn<Document, String> dateColumn = new TableColumn<>("Дата");
@@ -58,8 +54,7 @@ public class Docviewer extends Application {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setEditable(true);
 
-        VBox contentBox = new VBox(10, buttonBox, table);
-
+        VBox contentBox = new VBox(10, buttonBox, table); //создали корневой узел, в котором buttonBox и TableView
         VBox.setVgrow(table, Priority.ALWAYS);
         contentBox.setPadding(new Insets(10));
 
@@ -67,7 +62,6 @@ public class Docviewer extends Application {
         stage.setScene(scene);
         stage.setTitle("Тест");
         stage.show();
-
     }
 
 
@@ -75,7 +69,7 @@ public class Docviewer extends Application {
         launch();
     }
 
-    private void showDialog(Document document) {
+    private void showDialog(Document document) {        //создаем и настраиваем диалог создания документа
         Dialog<Document> dialog = new Dialog<>();
         dialog.setTitle("Создание документа");
         dialog.setHeaderText(null);
@@ -92,8 +86,7 @@ public class Docviewer extends Application {
         grid.addRow(1, new Label("Дата:"), dateField);
         grid.addRow(2, new Label("Пользователь:"), userField);
 
-        if (document instanceof Invoice) {
-            Invoice invoice = (Invoice) document;
+        if (document instanceof Invoice invoice) {
             TextField sumField = new TextField();
             TextField currencyField = new TextField();
             TextField currencyRateField = new TextField();
@@ -120,8 +113,7 @@ public class Docviewer extends Application {
                 }
                 return null;
             });
-        } else if (document instanceof Payroll) {
-            Payroll payroll = (Payroll) document;
+        } else if (document instanceof Payroll payroll) {
             TextField sumField = new TextField();
             TextField employeeField = new TextField();
 
@@ -139,8 +131,7 @@ public class Docviewer extends Application {
                 }
                 return null;
             });
-        } else if (document instanceof PaymentRequest) {
-            PaymentRequest paymentRequest = (PaymentRequest) document;
+        } else if (document instanceof PaymentRequest paymentRequest) {
             TextField contractorField = new TextField();
             TextField sumField = new TextField();
             TextField currencyField = new TextField();
@@ -188,20 +179,19 @@ public class Docviewer extends Application {
                     writer.write(System.lineSeparator());
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                e.getMessage();
             }
         }
     }
 
-    private void loadFromFile() {
+    private void loadFromFile() {  //чтение из файла использует статический метод классов документов fromString(String[] fileStrings)
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Загрузить документы");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Текстовые файлы", "*.txt"));
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             try {
-                String contentWithHead = Files.readString(Path.of(file.getPath()));
-                String content = contentWithHead.substring(0);
+                String content = Files.readString(Path.of(file.getPath()));
                 String[] stringsFromContent = content.split("\n");
 
                 switch (stringsFromContent[0]) {
