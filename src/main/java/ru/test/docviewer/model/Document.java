@@ -1,9 +1,10 @@
-package ru.test.docviewer;
+package ru.test.docviewer.model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import java.time.LocalDate;
 
 public abstract class Document {
@@ -17,16 +18,8 @@ public abstract class Document {
         this.name.set(name);
     }
 
-    public String getName() {
-        return name.get();
-    }
-
     public StringProperty getNameProperty() {
         return name;
-    }
-
-    public String getNumber() {
-        return number.get();
     }
 
     public StringProperty getNumberProperty() {
@@ -37,20 +30,12 @@ public abstract class Document {
         this.number.set(number);
     }
 
-    public LocalDate getDate() {
-        return date.get();
-    }
-
     public ObjectProperty<LocalDate> getDateProperty() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date.set(date);
-    }
-
-    public String getUser() {
-        return user.get();
     }
 
     public StringProperty getUserProperty() {
@@ -61,8 +46,8 @@ public abstract class Document {
         this.user.set(user);
     }
 
-    public void setSelected(Boolean newVal) {
-        isSelected = newVal;
+    public void setSelected(Boolean value) {
+        isSelected = value;
     }
 
     public Boolean getIsSelected(){

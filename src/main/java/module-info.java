@@ -12,4 +12,8 @@ module ru.test.docviewer {
 
     opens ru.test.docviewer to javafx.fxml;
     exports ru.test.docviewer;
+    exports ru.test.docviewer.model;
+    opens ru.test.docviewer.model to javafx.fxml;
+    exports ru.test.docviewer.exception;
+    opens ru.test.docviewer.exception to javafx.fxml;
 }

@@ -1,13 +1,14 @@
-package ru.test.docviewer;
+package ru.test.docviewer.model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import ru.test.docviewer.exception.FileException;
 
 import java.time.LocalDate;
 
-public class Payroll extends Document{
+public class Payroll extends Document {
 
     private DoubleProperty sum = new SimpleDoubleProperty();
     private StringProperty employee = new SimpleStringProperty();
@@ -16,24 +17,8 @@ public class Payroll extends Document{
         super("Платежка");
     }
 
-    public double getSum() {
-        return sum.get();
-    }
-
-    public DoubleProperty getSumProperty() {
-        return sum;
-    }
-
     public void setSum(double sum) {
         this.sum.set(sum);
-    }
-
-    public String getEmployee() {
-        return employee.get();
-    }
-
-    public StringProperty getEmployeeProperty() {
-        return employee;
     }
 
     public void setEmployee(String employee) {
@@ -46,12 +31,16 @@ public class Payroll extends Document{
     }
 
     public static Payroll fromString(String[] stringsFromFile) {
-        Payroll payroll = new Payroll();
-        payroll.setNumber(stringsFromFile[1].substring(7));
-        payroll.setDate(LocalDate.parse(stringsFromFile[2].substring(6)));
-        payroll.setUser(stringsFromFile[3].substring(14));
-        payroll.setSum(Double.parseDouble(stringsFromFile[4].substring(7)));
-        payroll.setEmployee(stringsFromFile[5].substring(11));
-        return payroll;
+        try{
+            Payroll payroll = new Payroll();
+            payroll.setNumber(stringsFromFile[1].substring(7));
+            payroll.setDate(LocalDate.parse(stringsFromFile[2].substring(6)));
+            payroll.setUser(stringsFromFile[3].substring(14));
+            payroll.setSum(Double.parseDouble(stringsFromFile[4].substring(7)));
+            payroll.setEmployee(stringsFromFile[5].substring(11));
+            return payroll;
+        } catch (Exception e) {
+            throw new FileException("Ошибка при чтении платежки из файла");
+        }
     }
 }

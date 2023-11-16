@@ -15,6 +15,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import ru.test.docviewer.model.Document;
+import ru.test.docviewer.model.Invoice;
+import ru.test.docviewer.model.PaymentRequest;
+import ru.test.docviewer.model.Payroll;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -179,7 +183,7 @@ public class Docviewer extends Application {
                     writer.write(System.lineSeparator());
                 }
             } catch (IOException e) {
-                e.getMessage();
+                e.printStackTrace();
             }
         }
     }
@@ -208,8 +212,8 @@ public class Docviewer extends Application {
                         table.getItems().add(paymentRequest);
                         break;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
