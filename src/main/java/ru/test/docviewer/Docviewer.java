@@ -68,7 +68,6 @@ public class Docviewer extends Application {
         stage.show();
     }
 
-
     public static void main(String[] args) {
         launch();
     }
@@ -240,7 +239,7 @@ public class Docviewer extends Application {
         table.getItems().removeAll(selectedDocuments);
     }
 
-    private HBox getButtonBox() {
+    private HBox getButtonBox() {     //создаем кнопки и устанавливаем каждоц действие при нажатии, далее помещаем их все в buttonBox
         Button InvoiceButton = new Button("Накладная");
         InvoiceButton.setOnAction(event -> showDialog(new Invoice()));
 
